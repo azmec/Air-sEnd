@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/UI/munro.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/UI/TextBubble.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Else/Credits.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 10
+font_data = ExtResource( 1 )
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 128.0
+margin_top = 160.0
+margin_right = 190.0
+margin_bottom = 189.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Version 0.5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box1" type="TextureRect" parent="."]
+margin_left = 120.0
+margin_top = 16.0
+margin_right = 280.0
+margin_bottom = 106.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Box1"]
+margin_left = 16.0
+margin_top = 8.0
+margin_right = 67.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Sprites from
+kenny.nl"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box2" type="TextureRect" parent="."]
+margin_left = 120.0
+margin_top = 64.0
+margin_right = 280.0
+margin_bottom = 154.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Box2"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 70.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Music from 
+Gravity Sounds"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box3" type="TextureRect" parent="."]
+margin_left = 120.0
+margin_top = 112.0
+margin_right = 280.0
+margin_bottom = 202.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Box3"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 70.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Game by 
+Aldats"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

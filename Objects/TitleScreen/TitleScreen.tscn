@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Objects/TitleScreen/Buttons/Credits.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/UI/munro.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Objects/TitleScreen/Buttons/NewGame.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/TitleScreen/Buttons/HowToPlay.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Main.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/TitleScreen/TitleScreen.gd" type="Script" id=6]
+[ext_resource path="res://Objects/Else/Earth.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Tiles/PlayerButBetter.png" type="Texture" id=8]
+[ext_resource path="res://Objects/Else/HowToPlay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Objects/Else/Credits.tscn" type="PackedScene" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+font_data = ExtResource( 2 )
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 40.0
+margin_top = 16.0
+margin_right = 280.0
+margin_bottom = 160.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Menu"]
+margin_right = 240.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 3
+text = "   AIR'S END"
+
+[node name="TextureRect" type="TextureRect" parent="Menu/Label"]
+margin_left = 174.0
+margin_top = 4.0
+margin_right = 214.0
+margin_bottom = 44.0
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterRow" type="HBoxContainer" parent="Menu"]
+margin_top = 50.0
+margin_right = 240.0
+margin_bottom = 144.0
+size_flags_vertical = 3
+
+[node name="HBox" type="VBoxContainer" parent="Menu/CenterRow"]
+margin_right = 240.0
+margin_bottom = 94.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Buttons" type="Node" parent="Menu/CenterRow/HBox"]
+
+[node name="NewGame" parent="Menu/CenterRow/HBox/Buttons" instance=ExtResource( 3 )]
+margin_left = 40.0
+margin_top = 53.0
+margin_right = 280.0
+margin_bottom = 73.0
+scene_to_load = ExtResource( 5 )
+
+[node name="HowToPlay" parent="Menu/CenterRow/HBox/Buttons" instance=ExtResource( 4 )]
+margin_left = 40.0
+margin_top = 73.0
+margin_right = 280.0
+margin_bottom = 93.0
+scene_to_load = ExtResource( 9 )
+
+[node name="Credits" parent="Menu/CenterRow/HBox/Buttons" instance=ExtResource( 1 )]
+margin_left = 40.0
+margin_top = 93.0
+margin_right = 280.0
+margin_bottom = 113.0
+scene_to_load = ExtResource( 10 )
+
+[node name="Earth" parent="." instance=ExtResource( 7 )]

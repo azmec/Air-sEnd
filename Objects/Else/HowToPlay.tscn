@@ -1,0 +1,255 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assets/UI/MediumTextBubble.png" type="Texture" id=1]
+[ext_resource path="res://Assets/UI/munro.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/UI/MoveTiles.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/OxygenCounterTile.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Tiles/PlayerButBetter.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/OxygenTiles.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Enemies/Gubo/Gubo.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Enemies/Bulbo/Bulbo.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Tiles/Exit.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Tiles/AlternateExit.png" type="Texture" id=10]
+[ext_resource path="res://Assets/UI/TextBubble.png" type="Texture" id=11]
+[ext_resource path="res://Objects/Else/Earth.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Objects/Else/HowToPlay.gd" type="Script" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 10
+font_data = ExtResource( 2 )
+
+[node name="HowToPlay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialogue1" type="TextureRect" parent="."]
+margin_left = 16.0
+margin_top = 8.0
+margin_right = 176.0
+margin_bottom = 98.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="TextureRect" parent="Dialogue1"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 48.0
+margin_bottom = 48.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue1/Player"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": You."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveTile" type="TextureRect" parent="Dialogue1"]
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 48.0
+margin_bottom = 64.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue1/MoveTile"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": Moves left."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Oxygen" type="TextureRect" parent="Dialogue1"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 48.0
+margin_bottom = 80.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue1/Oxygen"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": Oxygen Left."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OxygenCounter" type="TextureRect" parent="Dialogue1"]
+margin_left = 8.0
+margin_top = 56.0
+margin_right = 48.0
+margin_bottom = 96.0
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue1/OxygenCounter"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Current Oxygen Tile Capacity."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialogue2" type="TextureRect" parent="."]
+margin_left = 144.0
+margin_top = 80.0
+margin_right = 304.0
+margin_bottom = 170.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bulbo" type="TextureRect" parent="Dialogue2"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 48.0
+margin_bottom = 48.0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue2/Bulbo"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": Bulbo; Moves 1 space per turn."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gubo" type="TextureRect" parent="Dialogue2"]
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 48.0
+margin_bottom = 64.0
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue2/Gubo"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 149.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": Gubo; Moves 2 spaces per turn."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="TextureRect" parent="Dialogue2"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 48.0
+margin_bottom = 80.0
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue2/Exit"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": The Exit."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OxygenCounter" type="TextureRect" parent="Dialogue2"]
+margin_left = 8.0
+margin_top = 56.0
+margin_right = 48.0
+margin_bottom = 96.0
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue2/OxygenCounter"]
+margin_left = 16.0
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = ": Salvation."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialogue3" type="TextureRect" parent="."]
+margin_left = 32.0
+margin_top = 112.0
+margin_right = 192.0
+margin_bottom = 202.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue3"]
+margin_left = -24.0
+margin_top = 16.0
+margin_right = 106.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "ESC to titlescreen"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Earth" parent="." instance=ExtResource( 12 )]
+margin_left = 136.0
+margin_top = -192.0
+margin_right = 486.0
+margin_bottom = 118.0
+rect_rotation = 10.8
+
+[editable path="Earth"]

@@ -1,0 +1,397 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://Assets/Tiles/SciWalls.png" type="Texture" id=1]
+[ext_resource path="res://MiscScripts/StupidGenerator.gd" type="Script" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Objects/Interactives/Exit.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MiscScripts/Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://Objects/CameraObjects/Screenshake/ScreenShake.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Tiles/FloorTiles.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UI/OxygenTiles.png" type="Texture" id=9]
+[ext_resource path="res://Assets/UI/TextBubble.png" type="Texture" id=10]
+[ext_resource path="res://Assets/UI/Skull.png" type="Texture" id=11]
+[ext_resource path="res://Assets/UI/MediumTextBubble.png" type="Texture" id=12]
+[ext_resource path="res://Assets/UI/vignette.png" type="Texture" id=13]
+[ext_resource path="res://Assets/UI/munro.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://MiscScripts/DeathTextGenerator.gd" type="Script" id=15]
+[ext_resource path="res://Objects/Interactives/AlternateExit.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Assets/Sounds/EnemyTurn.wav" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Sounds/TreasurePickup.wav" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Sounds/Confirm.wav" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sounds/NewLevel.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/UI/MoveTiles.png" type="Texture" id=21]
+[ext_resource path="res://Assets/UI/OxygenCounterTile.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Treasures/MasterKey.png" type="Texture" id=24]
+
+[sub_resource type="TileSet" id=1]
+0/name = "FloorTiles.png 0"
+0/texture = ExtResource( 8 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 16, 16, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "FloorTiles.png 1"
+1/texture = ExtResource( 8 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 16, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "FloorTiles.png 2"
+2/texture = ExtResource( 8 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 16, 0, 16, 16 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "FloorTiles.png 3"
+3/texture = ExtResource( 8 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 0, 0, 16, 16 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+
+[sub_resource type="TileSet" id=2]
+0/name = "SciWalls.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "SciWalls.png 1"
+1/texture = ExtResource( 1 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 16, 0, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "SciWalls.png 2"
+2/texture = ExtResource( 1 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 16, 16, 16 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "SciWalls.png 3"
+3/texture = ExtResource( 1 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 16, 16, 16, 16 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+outline_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 10
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 10
+font_data = ExtResource( 14 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="GroundTiles" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="WorldGenerator" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+drag_margin_left = 0.5
+drag_margin_top = 0.5
+drag_margin_right = 0.5
+drag_margin_bottom = 0.5
+script = ExtResource( 6 )
+
+[node name="ScreenShake" parent="Camera2D" instance=ExtResource( 7 )]
+
+[node name="Click" type="AudioStreamPlayer" parent="Camera2D"]
+stream = ExtResource( 19 )
+
+[node name="Exit" parent="." instance=ExtResource( 4 )]
+
+[node name="AlternateExit" parent="." instance=ExtResource( 16 )]
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="DeathTextGenerator" type="Node" parent="."]
+script = ExtResource( 15 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Vignette" type="TextureRect" parent="CanvasLayer"]
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="testtext" type="Label" parent="CanvasLayer"]
+margin_left = 208.0
+margin_right = 320.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "playtest build"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OxygenUI" type="TextureRect" parent="CanvasLayer"]
+margin_right = 80.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeyUI" type="TextureRect" parent="CanvasLayer"]
+margin_left = -16.0
+margin_top = 48.0
+margin_right = 80.0
+margin_bottom = 64.0
+texture = ExtResource( 24 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveTileUI" type="TextureRect" parent="CanvasLayer"]
+margin_left = -16.0
+margin_top = 32.0
+margin_right = 80.0
+margin_bottom = 48.0
+texture = ExtResource( 21 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OxygenTimerUI" type="TextureRect" parent="CanvasLayer"]
+margin_left = -16.0
+margin_top = 16.0
+margin_right = 80.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextBubble" type="TextureRect" parent="CanvasLayer"]
+margin_left = 120.0
+margin_top = -24.0
+margin_right = 200.0
+margin_bottom = 21.0
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathDisplay" type="TextureRect" parent="CanvasLayer"]
+visible = false
+margin_left = 80.0
+margin_top = 48.0
+margin_right = 240.0
+margin_bottom = 138.0
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Skull" type="TextureRect" parent="CanvasLayer/DeathDisplay"]
+margin_left = 72.0
+margin_top = 16.0
+margin_right = 112.0
+margin_bottom = 56.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathText" type="Label" parent="CanvasLayer/DeathDisplay"]
+margin_left = 8.0
+margin_top = 32.0
+margin_right = 152.0
+margin_bottom = 48.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Your body was gone an hour later"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathPrompt" type="Label" parent="CanvasLayer/DeathDisplay"]
+margin_left = 8.0
+margin_top = 48.0
+margin_right = 152.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Press R to restart.
+Press ESCAPE to enter main menu."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelText" type="Label" parent="CanvasLayer"]
+margin_left = 88.0
+margin_right = 232.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TreasureDisplay" type="TextureRect" parent="CanvasLayer"]
+visible = false
+margin_left = 80.0
+margin_top = 48.0
+margin_right = 240.0
+margin_bottom = 138.0
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="Label" parent="CanvasLayer/TreasureDisplay"]
+margin_left = 14.0
+margin_top = 6.0
+margin_right = 148.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "HEADER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="CanvasLayer/TreasureDisplay"]
+margin_left = 10.0
+margin_top = 24.0
+margin_right = 153.0
+margin_bottom = 48.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "MESSAGE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Portrait" type="TextureRect" parent="CanvasLayer/TreasureDisplay"]
+margin_left = 64.0
+margin_top = 48.0
+margin_right = 96.0
+margin_bottom = 80.0
+expand = true
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="TreasurePickup" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+
+[node name="EnemyTurn" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 17 )
+
+[node name="Confirm" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 19 )
+
+[node name="NewLevel" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 20 )
+[connection signal="no_valid_move" from="Player/CharacterController" to="Camera2D" method="_on_CharacterController_no_valid_move"]
+
+[editable path="Player"]

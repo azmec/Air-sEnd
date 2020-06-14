@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Objects/Controllers/CharacterController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Enemies/Gubo/Gubo.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Controllers/LineOfSight.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/Enemies/Gubo/Gubo.gd" type="Script" id=4]
+
+[node name="Gubo" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="LineOfSight" parent="." instance=ExtResource( 3 )]
+
+[node name="CharacterController" parent="." instance=ExtResource( 1 )]

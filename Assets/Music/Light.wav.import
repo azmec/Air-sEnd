@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Light.wav-83fba4f8eceb7158b2d444c3adbeb706.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Light.wav"
+dest_files=[ "res://.import/Light.wav-83fba4f8eceb7158b2d444c3adbeb706.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

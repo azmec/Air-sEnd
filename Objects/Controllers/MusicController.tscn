@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Music/Turn.wav" type="AudioStream" id=1]
+[ext_resource path="res://Objects/Controllers/MusicController.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Music/Alchemy.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Music/Light.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Music/Empty Space.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Music/Grace.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Music/Chasm.wav" type="AudioStream" id=7]
+
+[node name="MusicController" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Turn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -10.0
+
+[node name="Alchemy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -10.0
+
+[node name="Chasm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+
+[node name="EmptySpace" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -10.0
+
+[node name="Grace" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="Light" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+[connection signal="finished" from="Turn" to="." method="_on_Turn_finished"]
+[connection signal="finished" from="Alchemy" to="." method="_on_Turn_finished"]
+[connection signal="finished" from="Chasm" to="." method="_on_Turn_finished"]
+[connection signal="finished" from="EmptySpace" to="." method="_on_Turn_finished"]
+[connection signal="finished" from="Grace" to="." method="_on_Turn_finished"]
+[connection signal="finished" from="Light" to="." method="_on_Turn_finished"]
