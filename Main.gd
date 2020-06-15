@@ -45,8 +45,12 @@ func _ready():
 	randomize()
 	# initilizing controllers
 	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
-	player.init(tileMap, worldGenerator, enemies)
 	generate_world()
+	player.connect("player_turn_taken", self, "_on_Player_turn_taken")
+	player.connect("player_is_dead", self, "_on_Player_is_dead")
+	player.connect("not_valid_move", self, "_on_Player_not_valid_move")
+	player.connect("player_at_exit", self, "_on_Player_at_exit")
+	player.connect("treasure_found", self, "_on_Player_treasure_found")
 
 func generate_world():
 	$Sounds/NewLevel.play()
@@ -59,29 +63,15 @@ func generate_world():
 	treasure_data = world_data.treasure_data
 	aStar = world_data.aStar
 	aStar_points_cache = world_data.aStar_points_cache
-	player.enemies = world_data.enemies
+	player._initialize(tileMap, treasure_data, alternateExit, exit)
+	for enemy in enemies.values():
+		enemy._initialize(aStar_points_cache, aStar, tileMap)
+	player.alternateExit_spawned = worldGenerator.alternateExit_spawned
 	levelText.text = "Level: " + str(current_level + 1)
 
 func _process(delta):
-	var player_coordinates = world_position_to_map_position(player.global_position)
-	var sPlayer_coordinates = str(player_coordinates)
-	if treasure_data.size() > 0 and str(sPlayer_coordinates) in treasure_data.object_data:
-		$Sounds/TreasurePickup.play()
-		if treasure_data.object == "OxygenCanister":
-			player.oxygen_count += 10
-		elif treasure_data.object == "LeatherBoots":
-			player.MINIMUM_MOVES += 1
-		elif treasure_data.object == "WornHelm":
-			player.maximum_oxygen += 1
-		elif treasure_data.object == "MasterKey":
-			total_keys += 1
-			worldGenerator.spawn_key = false
-		treasure_data.object_data[sPlayer_coordinates].queue_free()
-		treasure_data.object_data.erase(sPlayer_coordinates)
-		treasureDisplay.show()
-		treasureHeader.text = treasure_data.header
-		treasureMessage.text = treasure_data.message
-		treasurePortrait.texture = treasure_data.image
+	#for enemy in enemies.values():
+	#	enemy.player_coordinates = player.player_coordinates
 	if Input.is_action_just_pressed("ui_accept"):
 		$Sounds/Confirm.play()
 		$CanvasLayer/TreasureDisplay.hide()
@@ -90,44 +80,13 @@ func _process(delta):
 		restart()
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene("res://Objects/TitleScreen/TitleScreen.tscn")
-#	if Input.is_action_just_pressed("exit"):
-#		get_tree().change_scene_to(scene_to_load)
 	oxygenTimerUI.rect_size.x = (player.oxygen_timer + 1) * 16
 	moveTileUI.rect_size.x = (player.moves_left + 1) * 16
 	keyUI.rect_size.x = total_keys * 16
 	oxygenUI.rect_size.x = player.oxygen_count * 16
-	if player.oxygen_count == 0:
-		oxygenUI.hide()
-	for enemy in enemies.values():
-		var enemy_position = enemy.global_position
-		if player.global_position == enemy.global_position:
-			player.die()
-	if player.global_position == exit.global_position:
-		player.current_level += 1
-		generate_world()
-	if worldGenerator.alternateExit_spawned:
-		if player.global_position == alternateExit.global_position and total_keys != 2:
-			$Player/NoMove.play()
-			player.characterController.move_character(player, player.sprite, [1, 0])
-			camera.screenShake.start(0.1, 15, 8, 0)
-		elif player.global_position == alternateExit.global_position:
-			player.die()
-	if player.moves_left == 0:
-		$Sounds/EnemyTurn.play()
-		player.moves_left = player.MINIMUM_MOVES
-		for i in enemies:
-			var enemy = enemies[i]
-			enemy.ready_to_move = true
-	if player.dead:
-		for enemy in enemies.values():
-			enemy.set_process(false)
-		deathText.text = death_text
-		deathDisplay.show()
 func restart():
-	print(oxygenUI.rect_size.x)
 	player.default()
 	player.oxygen_count = 5
-	oxygenUI.rect_size.x = 80
 	player.dead = false
 	deathDisplay.hide()
 	generate_world()
@@ -136,3 +95,35 @@ func world_position_to_map_position(position: Vector2):
 	var vCoordinates = tileMap.world_to_map(position)
 	var coordinates = [int(round(vCoordinates.x)), int(round(vCoordinates.y))]
 	return coordinates
+
+func _on_Player_turn_taken(coordinates):
+	for enemy in enemies.values():
+		if player.global_position == enemy.global_position:
+			player.die()
+	for i in enemies:
+		var enemy = enemies[i]
+		enemy.is_enemy_turn = true
+	$Sounds/EnemyTurn.play()
+
+func _on_Player_is_dead():
+	for enemy in enemies.values():
+		enemy.set_process(false) 
+	deathText.text = death_text 
+	deathDisplay.show()
+
+func _on_Player_not_valid_move():
+	camera.screenShake.start(0.1, 15, 8, 0)
+
+func _on_Player_at_exit(type_of_exit):
+	if type_of_exit == exit:
+		generate_world()
+#	else:
+#		generate_alternate_world()
+
+func _on_Player_treasure_found(treasure_name):
+	treasureDisplay.show()
+	treasureHeader.text = treasure_data.header
+	treasureMessage.text = treasure_data.message
+	treasurePortrait.texture = treasure_data.image
+	if treasure_name == "MasterKey":
+		worldGenerator.spawn_key = false

@@ -392,6 +392,5 @@ stream = ExtResource( 19 )
 
 [node name="NewLevel" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 20 )
-[connection signal="no_valid_move" from="Player/CharacterController" to="Camera2D" method="_on_CharacterController_no_valid_move"]
 
 [editable path="Player"]
