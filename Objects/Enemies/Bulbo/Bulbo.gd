@@ -6,7 +6,6 @@ onready var player = get_tree().get_root().get_node("Main").find_node("Player")
 onready var main = get_tree().get_root().get_node("Main")
 onready var characterController = $CharacterController
 onready var lineOfSight = $LineOfSight
-onready var sprite = $Sprite
 var is_enemy_turn = false
 var tileMap_ref = null
 var aStar_ref = null
@@ -17,7 +16,7 @@ var UP = [0, -1]
 var DOWN = [0, 1]
 func _ready():
 	characterController.init(tileMap)
-func _process(delta):
+func _process(_delta):
 	var player_coordinates = world_position_to_map_position(player.global_position)
 	var current_coordinates = world_position_to_map_position(self.global_position)
 	lineOfSight.get_line_of_sight(current_coordinates, player_coordinates, tileMap)
@@ -25,17 +24,17 @@ func _process(delta):
 		var path = lineOfSight.get_grid_path(current_coordinates, player_coordinates, main.aStar, main.aStar_points_cache)
 		if path.size() > 1:
 			if current_coordinates[0] < int(round(path[1].x)):
-				characterController.move_character(self, sprite, RIGHT)
+				characterController.move_character(self, RIGHT)
 				is_enemy_turn = false
 			if current_coordinates[0] > int(round(path[1].x)):
-				characterController.move_character(self, sprite, LEFT)
+				characterController.move_character(self, LEFT)
 				is_enemy_turn = false
 			if current_coordinates[1] < int(round(path[1].y)):
-				characterController.move_character(self, sprite, DOWN)
+				characterController.move_character(self, DOWN)
 				is_enemy_turn = false
 			if current_coordinates[1] > int(round(path[1].y)):
 				is_enemy_turn = false
-				characterController.move_character(self, sprite, UP)
+				characterController.move_character(self, UP)
 func world_position_to_map_position(position: Vector2):
 	var vCoordinates = tileMap.world_to_map(position)
 	var coordinates = [int(round(vCoordinates.x)), int(round(vCoordinates.y))]

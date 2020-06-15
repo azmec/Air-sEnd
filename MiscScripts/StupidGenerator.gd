@@ -105,7 +105,7 @@ func generate_rooms_data() -> Dictionary:
 	var open_locations = get_open_adjacent_rooms(rooms_data, [0, 0])
 	var generated_rooms = []
 	# get random rooms until we reach the desired room count
-	for i in range(room_count):
+	for _i in range(room_count):
 		# get random room type
 		var random_room_type = (randi() % (ROOM_TYPES - 1)) + 1 # remove exit room from selection
 		# get random location from the possible open locations
@@ -326,8 +326,6 @@ func generate_objects_in_world(spawn_locations: Dictionary) -> Dictionary:
 	var enemy_count = START_ENEMY_COUNT + ENEMY_COUNT_INCREASE_PER_LEVEL * current_level
 	# sets enemies 
 	var enemies = spawn_objects_at_locations(enemy, spawn_locations.enemy_spawn_locations, enemy_count, "enemies")
-	# sets locations
-	var pickup_spawn_locations = spawn_locations.pickup_spawn_locations
 	# sets treasure dictionary
 	var treasure = {}
 	if !spawn_key:
@@ -354,7 +352,7 @@ func generate_objects_in_world(spawn_locations: Dictionary) -> Dictionary:
 
 func spawn_objects_at_locations(object_to_spawn, location_list: Array, amount_to_spawn: int, group_name: String, flip_randomly = true):
 	var spawned_objects = {}
-	for i in range(amount_to_spawn):
+	for _i in range(amount_to_spawn):
 		randomize()
 		var random_number = randi() % TYPES_OF_ENEMIES + 1
 		var instance = null

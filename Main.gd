@@ -5,7 +5,6 @@ onready var tileMap = $TileMap
 onready var floorTileMap = $GroundTiles
 onready var worldGenerator = $WorldGenerator
 onready var player = $Player
-onready var playerSprite = $Player/Sprite
 onready var exit = $Exit
 onready var alternateExit = $AlternateExit
 onready var camera = $Camera2D
@@ -14,12 +13,9 @@ onready var keyUI = $CanvasLayer/KeyUI
 onready var oxygenUI = $CanvasLayer/OxygenUI
 onready var oxygenTimerUI = $CanvasLayer/OxygenTimerUI
 onready var moveTileUI = $CanvasLayer/MoveTileUI
-onready var textBubble = $CanvasLayer/TextBubble
 onready var deathDisplay = $CanvasLayer/DeathDisplay
-onready var skull = $CanvasLayer/DeathDisplay/Skull
 onready var deathText = $CanvasLayer/DeathDisplay/DeathText
 onready var deathTextGenerator = $DeathTextGenerator
-onready var deathPrompt = $CanvasLayer/DeathDisplay/DeathPrompt
 onready var levelText = $CanvasLayer/LevelText
 onready var treasureDisplay = $CanvasLayer/TreasureDisplay
 onready var treasureHeader = $CanvasLayer/TreasureDisplay/Header
@@ -66,7 +62,7 @@ func generate_world():
 	player.alternateExit_spawned = worldGenerator.alternateExit_spawned
 	levelText.text = "Level: " + str(current_level + 1)
 
-func _process(delta):
+func _process(_delta):
 	#for enemy in enemies.values():
 	#	enemy.player_coordinates = player.player_coordinates
 	if Input.is_action_just_pressed("ui_accept"):
@@ -90,8 +86,6 @@ func _process(delta):
 			player.die()
 func restart():
 	player.default()
-	player.oxygen_count = 5
-	player.dead = false
 	deathDisplay.hide()
 	generate_world()
 

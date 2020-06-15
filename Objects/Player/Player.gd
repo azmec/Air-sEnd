@@ -42,7 +42,6 @@ const LEFT = [-1, 0]
 const UP = [0, -1]
 const DOWN = [0, 1]
 
-onready var sprite = $Sprite
 onready var characterController = $CharacterController
 onready var moveTimer = $MoveTimer
 onready var accelerationTimer = $AccelerationTimer
@@ -59,6 +58,7 @@ func init(treasureData_ref, alternateExit_ref, exit_ref):
 	exit = exit_ref
 
 func default():
+	dead = false
 	sound_played = false
 	current_level = 0
 	oxygen_count = 5
@@ -66,13 +66,12 @@ func default():
 	oxygen_timer_max = 5
 	maximum_oxygen = 5
 	MINIMUM_MOVES = 1
-func _process(delta):
+func _process(_delta):
 	if dead:
 		return
 	player_coordinates = characterController.world_position_to_map_position(self.global_position)
 	# define move direction as coordinates
 	move_direction = [0, 0]
-	var time_held = 0
 	# acceleration based on holding input
 	if Input.is_action_just_pressed("ui_left"):
 		moveTimer.start()
@@ -120,7 +119,7 @@ func _process(delta):
 	# if there is input
 	if move_direction != [0, 0]:
 		# call move_character
-		moved = characterController.move_character(self, sprite, move_direction)
+		moved = characterController.move_character(self, move_direction)
 		if moved:
 			get_random_step_sound()
 			oxygen_timer -= 1
@@ -143,7 +142,7 @@ func _process(delta):
 			# if our position matches the alternateExit and we have a key
 			if self.global_position == alternateExit.global_position and key_count == 0:
 				$NoMove.play()
-				characterController.move_character(self, sprite, RIGHT)
+				characterController.move_character(self, RIGHT)
 				emit_signal("not_valid_move") 
 			elif key_count == 1:
 				# emit_signal("player_at_exit", alternateExit)

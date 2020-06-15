@@ -5,11 +5,9 @@ var worldGenerator = null
 func init(tilemap_ref):
 	tileMap = tilemap_ref
 
-func move_character(character, sprite, direction):
+func move_character(character, direction):
 	# get current character coordinates
 	var coordinates = world_position_to_map_position(character.global_position)
-	# store these coordinates into a seperate variable
-	var past_coordinates = coordinates.duplicate()
 	# move character's coordinates on the x axis
 	coordinates[0] += direction[0]
 	# move character's coordinates on the y axis
