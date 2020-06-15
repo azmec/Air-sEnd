@@ -83,6 +83,8 @@ func _process(delta):
 	oxygenUI.rect_size.x = player.oxygen_count * 16
 	if player.oxygen_count <= 0:
 		oxygenUI.hide()
+	else:
+		oxygenUI.show()
 	for enemy in enemies.values():
 		if player.global_position == enemy.global_position:
 			player.die()
