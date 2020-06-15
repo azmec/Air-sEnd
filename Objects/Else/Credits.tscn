@@ -30,9 +30,9 @@ __meta__ = {
 }
 
 [node name="Box1" type="TextureRect" parent="."]
-margin_left = 120.0
+margin_left = 72.0
 margin_top = 16.0
-margin_right = 280.0
+margin_right = 232.0
 margin_bottom = 106.0
 texture = ExtResource( 2 )
 __meta__ = {
@@ -53,10 +53,35 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Box4" type="TextureRect" parent="."]
+margin_left = 168.0
+margin_top = 16.0
+margin_right = 328.0
+margin_bottom = 106.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Box4"]
+margin_left = 11.0
+margin_top = 8.0
+margin_right = 71.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Title font from
+fontstruct"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Box2" type="TextureRect" parent="."]
-margin_left = 120.0
+margin_left = 72.0
 margin_top = 64.0
-margin_right = 280.0
+margin_right = 232.0
 margin_bottom = 154.0
 texture = ExtResource( 2 )
 __meta__ = {
@@ -72,6 +97,31 @@ custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Music from 
 Gravity Sounds"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box5" type="TextureRect" parent="."]
+margin_left = 168.0
+margin_top = 64.0
+margin_right = 328.0
+margin_bottom = 154.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Box5"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 70.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Game font is
+munro
+"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
