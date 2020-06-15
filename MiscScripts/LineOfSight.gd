@@ -64,6 +64,8 @@ func get_line_of_sight(starting_coordinates, ending_coordinates, tilemap: TileMa
 # generate path
 func get_grid_path(starting_coordinates, ending_coordinates, aStar: AStar2D, aStar_points_cache: Dictionary):
 	var path = aStar.get_point_path(aStar_points_cache[str(starting_coordinates)], aStar_points_cache[str(ending_coordinates)])
+	if path == null:
+		path = starting_coordinates
 	return path
 
 # DEBUG

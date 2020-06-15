@@ -81,6 +81,8 @@ func _process(delta):
 	moveTileUI.rect_size.x = (player.moves_left + 1) * 16
 	keyUI.rect_size.x = (player.key_count + 1) * 16
 	oxygenUI.rect_size.x = player.oxygen_count * 16
+	if player.oxygen_count <= 0:
+		oxygenUI.hide()
 	for enemy in enemies.values():
 		if player.global_position == enemy.global_position:
 			player.die()
