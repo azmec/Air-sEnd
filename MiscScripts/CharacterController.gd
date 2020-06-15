@@ -38,4 +38,6 @@ func valid_move(coordinates):
 	# if the tile cell has a value greater than or equal to 0, i.e if it is filled in
 	if tileMap.get_cell(coordinates[0], coordinates[1]) >= 0:
 		return false
+	else:
+		return true
 

@@ -33,7 +33,6 @@ var enemies = {}
 var aStar = null
 var aStar_points_cache = {}
 var death_text = null
-var total_keys = 1
 
 const RIGHT = [1, 0]
 const LEFT = [-1, 0]
@@ -63,9 +62,7 @@ func generate_world():
 	treasure_data = world_data.treasure_data
 	aStar = world_data.aStar
 	aStar_points_cache = world_data.aStar_points_cache
-	player._initialize(tileMap, treasure_data, alternateExit, exit)
-	for enemy in enemies.values():
-		enemy._initialize(aStar_points_cache, aStar, tileMap)
+	player.init(treasure_data, alternateExit, exit)
 	player.alternateExit_spawned = worldGenerator.alternateExit_spawned
 	levelText.text = "Level: " + str(current_level + 1)
 
@@ -82,8 +79,11 @@ func _process(delta):
 		get_tree().change_scene("res://Objects/TitleScreen/TitleScreen.tscn")
 	oxygenTimerUI.rect_size.x = (player.oxygen_timer + 1) * 16
 	moveTileUI.rect_size.x = (player.moves_left + 1) * 16
-	keyUI.rect_size.x = total_keys * 16
+	keyUI.rect_size.x = (player.key_count + 1) * 16
 	oxygenUI.rect_size.x = player.oxygen_count * 16
+	for enemy in enemies.values():
+		if player.global_position == enemy.global_position:
+			player.die()
 func restart():
 	player.default()
 	player.oxygen_count = 5
@@ -97,12 +97,10 @@ func world_position_to_map_position(position: Vector2):
 	return coordinates
 
 func _on_Player_turn_taken(coordinates):
-	for enemy in enemies.values():
-		if player.global_position == enemy.global_position:
-			player.die()
 	for i in enemies:
 		var enemy = enemies[i]
 		enemy.is_enemy_turn = true
+	player.moves_left = player.MINIMUM_MOVES
 	$Sounds/EnemyTurn.play()
 
 func _on_Player_is_dead():
@@ -121,6 +119,7 @@ func _on_Player_at_exit(type_of_exit):
 #		generate_alternate_world()
 
 func _on_Player_treasure_found(treasure_name):
+	$Sounds/TreasurePickup.play()
 	treasureDisplay.show()
 	treasureHeader.text = treasure_data.header
 	treasureMessage.text = treasure_data.message

@@ -7,7 +7,7 @@ var moved = false
 # our current level
 var current_level = 0
 # container for tileMap access; needed to pass into CharacterController
-var tileMap = null
+#var tileMap = null
 # container for treasureData access; needed for treasure contact checks
 var treasureData = null
 var exit = null
@@ -28,7 +28,7 @@ var move_direction = [0, 0]
 # used to play death sound once and once only
 var sound_played = false
 # the minimum amount of moves we have per turn
-var MINIMUM_MOVES = 1
+var MINIMUM_MOVES = 2
 var player_coordinates = null
 
 signal player_turn_taken(coordinates)
@@ -46,14 +46,17 @@ onready var sprite = $Sprite
 onready var characterController = $CharacterController
 onready var moveTimer = $MoveTimer
 onready var accelerationTimer = $AccelerationTimer
+onready var tileMap = get_tree().get_root().get_node("Main").find_node("TileMap")
 
-func _initialize(tilemap_ref, treasureData_ref, alternateExit_ref, exit_ref):
-	tileMap = tilemap_ref
+func _ready():
+	characterController.init(tileMap)
+
+func init(treasureData_ref, alternateExit_ref, exit_ref):
+	#tileMap = tilemap_ref
 	treasureData = treasureData_ref
 	moves_left = MINIMUM_MOVES
 	alternateExit = alternateExit_ref
 	exit = exit_ref
-	characterController.init(tilemap_ref)
 
 func default():
 	sound_played = false
@@ -126,12 +129,10 @@ func _process(delta):
 			emit_signal("not_valid_move")
 			$NoMove.play()
 	# if we have no moves left
-	if moves_left == 0:
-		# signal that our turn was taken
-		emit_signal("player_turn_taken", player_coordinates)
+	if moves_left <= 0:
 		# if our oxygen timer has counted down, subtract from our
 		# oxygen count
-		if oxygen_timer == 0:
+		if oxygen_timer <= 0:
 			oxygen_count -= 1
 			# reset the timer
 			oxygen_timer = oxygen_timer_max
@@ -150,11 +151,14 @@ func _process(delta):
 		if self.global_position == exit.global_position:
 			current_level += 1
 			emit_signal("player_at_exit", exit)
+		# signal that our turn was taken
+		emit_signal("player_turn_taken", player_coordinates)
+	else: 
 		if treasureData.size() > 0:
 			var self_coordinates = str(player_coordinates)
 			if self_coordinates in treasureData.object_data:
 				if treasureData.object == "OxygenCanister":
-					oxygen_count += 10
+					oxygen_count += 1
 				elif treasureData.object == "LeatherBoots":
 					MINIMUM_MOVES += 1
 				elif treasureData.object == "WornHelm":
@@ -164,8 +168,6 @@ func _process(delta):
 				treasureData.object_data[self_coordinates].queue_free()
 				treasureData.object_data.erase(self_coordinates)
 				emit_signal("treasure_found", treasureData.object)
-		# reset our moves to minimum moves
-		moves_left = MINIMUM_MOVES
 func die():
 	if !sound_played:
 		sound_played = true
