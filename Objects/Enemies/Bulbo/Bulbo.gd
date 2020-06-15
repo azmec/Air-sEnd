@@ -11,10 +11,10 @@ var is_enemy_turn = false
 var tileMap_ref = null
 var aStar_ref = null
 var aStar_points_cache_ref = null
-const RIGHT = [1, 0]
-const LEFT = [-1, 0]
-const UP = [0, -1]
-const DOWN = [0, 1]
+var RIGHT = [1, 0]
+var LEFT = [-1, 0]
+var UP = [0, -1]
+var DOWN = [0, 1]
 func _ready():
 	characterController.init(tileMap)
 func _process(delta):
