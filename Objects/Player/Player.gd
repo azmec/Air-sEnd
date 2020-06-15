@@ -28,7 +28,7 @@ var move_direction = [0, 0]
 # used to play death sound once and once only
 var sound_played = false
 # the minimum amount of moves we have per turn
-var MINIMUM_MOVES = 2
+var MINIMUM_MOVES = 1
 var player_coordinates = null
 
 signal player_turn_taken(coordinates)
@@ -141,11 +141,11 @@ func _process(delta):
 			die()
 		if alternateExit_spawned:
 			# if our position matches the alternateExit and we have a key
-			if self.global_position == alternateExit.global_position and key_count != 1:
+			if self.global_position == alternateExit.global_position and key_count == 0:
 				$NoMove.play()
-				move_direction = RIGHT
+				characterController.move_character(self, sprite, RIGHT)
 				emit_signal("not_valid_move") 
-			elif key_count == 2:
+			elif key_count == 1:
 				# emit_signal("player_at_exit", alternateExit)
 				die()
 		if self.global_position == exit.global_position:
