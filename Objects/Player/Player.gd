@@ -21,7 +21,7 @@ var oxygen_timer_max = 5
 var maximum_oxygen = 5
 var can_add_oxygen = true
 var dead = false
-var key_count = 0
+var key_count = 1
 var can_store_energy = false
 var maximum_move_tiles = 2
 # used for input grace
@@ -32,8 +32,9 @@ var sound_played = false
 # the minimum amount of moves we have per turn
 var MINIMUM_MOVES = 1
 var player_coordinates = null
-
-signal player_turn_taken(coordinates)
+var upgradedPlayer = preload("res://Assets/Player/PlayerButBetter.png")
+var basePlayer = preload("res://Assets/Tiles/PlayerButBetter.png")
+signal player_turn_taken()
 signal player_at_exit(type_of_exit)
 signal player_is_dead
 signal not_valid_move
@@ -47,8 +48,7 @@ const DOWN = [0, 1]
 onready var characterController = $CharacterController
 onready var moveTimer = $MoveTimer
 onready var accelerationTimer = $AccelerationTimer
-onready var playerBase = $PlayerBase 
-onready var playerUpgrade = $PlayerUpgrade
+onready var playerSprite = $Sprite
 onready var tileMap = get_tree().get_root().get_node("Main").find_node("WallTiles")
 
 func _ready():
@@ -63,10 +63,10 @@ func init(treasureData_ref, alternateExit_ref, exit_ref):
 
 func default():
 	dead = false
-	playerUpgrade.hide()
-	playerBase.show()
+	playerSprite.texture = basePlayer
 	sound_played = false
 	can_store_energy = false
+	key_count = 0
 	current_level = 0
 	oxygen_count = 5
 	oxygen_timer = 5
@@ -123,9 +123,11 @@ func _process(_delta):
 		if can_add_oxygen == true:
 			oxygen_count += 1
 			moves_left -= 1
+			emit_signal("player_turn_taken")
 			$NoMove.play()
 		else:
 			moves_left -= 1
+			emit_signal("player_turn_taken")
 			$NoMove.play()
 	# if there is input
 	if move_direction != [0, 0]:
@@ -150,15 +152,15 @@ func _process(_delta):
 		if oxygen_count == 0:
 			die()
 		# signal that our turn was taken
-		emit_signal("player_turn_taken", player_coordinates)
+		emit_signal("player_turn_taken")
 	else: 
 		if alternateExit_spawned:
 			# if our position matches the alternateExit and we have a key
-			if self.global_position == alternateExit.global_position and key_count == 0:
+			if self.global_position == alternateExit.global_position and key_count <= 0:
 				$NoMove.play()
 				characterController.move_character(self, RIGHT)
 				emit_signal("not_valid_move") 
-			elif key_count == 1:
+			elif self.global_position == alternateExit.global_position and key_count >= 1:
 				emit_signal("player_at_exit", alternateExit)
 		if self.global_position == exit.global_position:
 			current_level += 1
@@ -173,8 +175,7 @@ func _process(_delta):
 					maximum_move_tiles += 1
 				elif treasureData.object == "WornHelm":
 					maximum_oxygen += 1
-					playerBase.hide()
-					playerUpgrade.show()
+					playerSprite.texture = upgradedPlayer
 				elif treasureData.object == "EnergyCapacitor":
 					can_store_energy = true
 				elif treasureData.object == "MasterKey":

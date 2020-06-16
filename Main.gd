@@ -7,8 +7,6 @@ onready var worldGenerator = $WorldGenerator
 onready var player = $Player
 onready var exit = $Exit
 onready var alternateExit = $AlternateExit
-onready var alternateGround = $AltGroundTiles
-onready var alteranteWalls = $AltWallTiles
 onready var camera = $Camera2D
 # Get UI elements
 onready var keyUI = $CanvasLayer/KeyUI 
@@ -31,6 +29,7 @@ var enemies = {}
 var aStar = null
 var aStar_points_cache = {}
 var death_text = null
+var is_alternate = false
 
 const RIGHT = [1, 0]
 const LEFT = [-1, 0]
@@ -86,6 +85,11 @@ func _process(_delta):
 	for enemy in enemies.values():
 		if player.global_position == enemy.global_position:
 			player.die()
+	if is_alternate:
+		levelText.text = "Level: " + str (randi() % 100)
+		tileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
+		floorTileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
+
 func restart():
 	player.default()
 	deathDisplay.hide()
@@ -96,11 +100,12 @@ func world_position_to_map_position(position: Vector2):
 	var coordinates = [int(round(vCoordinates.x)), int(round(vCoordinates.y))]
 	return coordinates
 
-func _on_Player_turn_taken(coordinates):
+func _on_Player_turn_taken():
 	for i in enemies:
 		var enemy = enemies[i]
 		enemy.is_enemy_turn = true
-	player.moves_left = player.MINIMUM_MOVES
+	if player.moves_left >= 0:
+		player.moves_left = player.MINIMUM_MOVES
 	$Sounds/EnemyTurn.play()
 
 func _on_Player_is_dead():
@@ -115,7 +120,7 @@ func _on_Player_not_valid_move():
 func _on_Player_at_exit(type_of_exit):
 	if type_of_exit == exit:
 		generate_world()
-	else:
+	elif type_of_exit == alternateExit:
 		generate_alternate_world()
 
 func _on_Player_treasure_found(treasure_name):
@@ -128,5 +133,9 @@ func _on_Player_treasure_found(treasure_name):
 		worldGenerator.spawn_key = false
 
 func generate_alternate_world():
-	worldGenerator.init(self, alteranteWalls, player, exit, rooms, alternateGround, alternateExit)
+	is_alternate = true
+	rooms = preload("res://Assets/Tiles/alternative_layout.png").get_data()
+	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
+	floorTileMap.tile_set = load('res://Objects/TileSets/final_tileset.tres')
+	tileMap.tile_set = load('res://Objects/TileSets/final_room.tres')
 	generate_world()
