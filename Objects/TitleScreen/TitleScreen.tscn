@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Objects/TitleScreen/Buttons/Credits.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/UI/LogoLong.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Objects/Else/Earth.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Else/HowToPlay.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Objects/Else/Credits.tscn" type="PackedScene" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -54,6 +56,7 @@ margin_left = 40.0
 margin_top = 53.0
 margin_right = 280.0
 margin_bottom = 73.0
+custom_styles/hover = SubResource( 1 )
 scene_to_load = ExtResource( 5 )
 
 [node name="HowToPlay" parent="Menu/CenterRow/HBox/Buttons" instance=ExtResource( 4 )]

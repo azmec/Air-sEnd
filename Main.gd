@@ -1,12 +1,14 @@
 extends Node2D
 #export(PackedScene) var scene_to_load
 onready var rooms = preload("res://Assets/Tiles/Layouts.png").get_data()
-onready var tileMap = $TileMap
+onready var tileMap = $WallTiles
 onready var floorTileMap = $GroundTiles
 onready var worldGenerator = $WorldGenerator
 onready var player = $Player
 onready var exit = $Exit
 onready var alternateExit = $AlternateExit
+onready var alternateGround = $AltGroundTiles
+onready var alteranteWalls = $AltWallTiles
 onready var camera = $Camera2D
 # Get UI elements
 onready var keyUI = $CanvasLayer/KeyUI 
@@ -49,7 +51,7 @@ func _ready():
 
 func generate_world():
 	$Sounds/NewLevel.play()
-	treasure_index = randi() % 4
+	treasure_index = randi() % 5
 	death_text = deathTextGenerator.get_death_text()
 	player.moves_left = player.MINIMUM_MOVES
 	var current_level = player.current_level
@@ -113,8 +115,8 @@ func _on_Player_not_valid_move():
 func _on_Player_at_exit(type_of_exit):
 	if type_of_exit == exit:
 		generate_world()
-#	else:
-#		generate_alternate_world()
+	else:
+		generate_alternate_world()
 
 func _on_Player_treasure_found(treasure_name):
 	$Sounds/TreasurePickup.play()
@@ -124,3 +126,7 @@ func _on_Player_treasure_found(treasure_name):
 	treasurePortrait.texture = treasure_data.image
 	if treasure_name == "MasterKey":
 		worldGenerator.spawn_key = false
+
+func generate_alternate_world():
+	worldGenerator.init(self, alteranteWalls, player, exit, rooms, alternateGround, alternateExit)
+	generate_world()

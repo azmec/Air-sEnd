@@ -22,6 +22,8 @@ var maximum_oxygen = 5
 var can_add_oxygen = true
 var dead = false
 var key_count = 0
+var can_store_energy = false
+var maximum_move_tiles = 2
 # used for input grace
 var can_move = false
 var move_direction = [0, 0]
@@ -45,7 +47,9 @@ const DOWN = [0, 1]
 onready var characterController = $CharacterController
 onready var moveTimer = $MoveTimer
 onready var accelerationTimer = $AccelerationTimer
-onready var tileMap = get_tree().get_root().get_node("Main").find_node("TileMap")
+onready var playerBase = $PlayerBase 
+onready var playerUpgrade = $PlayerUpgrade
+onready var tileMap = get_tree().get_root().get_node("Main").find_node("WallTiles")
 
 func _ready():
 	characterController.init(tileMap)
@@ -59,7 +63,10 @@ func init(treasureData_ref, alternateExit_ref, exit_ref):
 
 func default():
 	dead = false
+	playerUpgrade.hide()
+	playerBase.show()
 	sound_played = false
+	can_store_energy = false
 	current_level = 0
 	oxygen_count = 5
 	oxygen_timer = 5
@@ -109,6 +116,10 @@ func _process(_delta):
 			can_add_oxygen = false
 		else:
 			can_add_oxygen = true
+		if can_store_energy == true:
+			moves_left += 2
+		if moves_left >= maximum_move_tiles:
+			moves_left = maximum_move_tiles
 		if can_add_oxygen == true:
 			oxygen_count += 1
 			moves_left -= 1
@@ -138,6 +149,9 @@ func _process(_delta):
 		# if we no longer have oxygen, die
 		if oxygen_count == 0:
 			die()
+		# signal that our turn was taken
+		emit_signal("player_turn_taken", player_coordinates)
+	else: 
 		if alternateExit_spawned:
 			# if our position matches the alternateExit and we have a key
 			if self.global_position == alternateExit.global_position and key_count == 0:
@@ -145,23 +159,24 @@ func _process(_delta):
 				characterController.move_character(self, RIGHT)
 				emit_signal("not_valid_move") 
 			elif key_count == 1:
-				# emit_signal("player_at_exit", alternateExit)
-				die()
+				emit_signal("player_at_exit", alternateExit)
 		if self.global_position == exit.global_position:
 			current_level += 1
 			emit_signal("player_at_exit", exit)
-		# signal that our turn was taken
-		emit_signal("player_turn_taken", player_coordinates)
-	else: 
 		if treasureData.size() > 0:
 			var self_coordinates = str(player_coordinates)
 			if self_coordinates in treasureData.object_data:
 				if treasureData.object == "OxygenCanister":
-					oxygen_count += 1
+					oxygen_count = maximum_oxygen
 				elif treasureData.object == "LeatherBoots":
 					MINIMUM_MOVES += 1
+					maximum_move_tiles += 1
 				elif treasureData.object == "WornHelm":
 					maximum_oxygen += 1
+					playerBase.hide()
+					playerUpgrade.show()
+				elif treasureData.object == "EnergyCapacitor":
+					can_store_energy = true
 				elif treasureData.object == "MasterKey":
 					key_count += 1
 				treasureData.object_data[self_coordinates].queue_free()

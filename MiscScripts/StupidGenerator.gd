@@ -16,22 +16,29 @@ var treasures = [
 		"object": "OxygenCanister",
 		"scene_object": preload("res://Objects/Treasures/OxygenCanister.tscn"),
 		"header": "Oxygen Canister.",
-		"message": "They made as many as they could.\n+1 Oxygen",
+		"message": "They made as many as they could.\nRefill oxygen.",
 		"image": preload("res://Assets/Treasures/OxygenCanister.png")
 	},
 	{
 		"object": "LeatherBoots",
 		"scene_object": preload("res://Objects/Treasures/LeatherBoots.tscn"),
 		"header": "Leather Boots.",
-		"message": "A fine fit.\n+1 Move Per Turn",
+		"message": "A fine fit.\n+1 Move Per Turn.",
 		"image": preload("res://Assets/Treasures/LeatherBoots.png")
 	},
 	{
 		"object": "WornHelm",
 		"scene_object": preload("res://Objects/Treasures/WornHelm.tscn"),
 		"header": "Worn Helmet.",
-		"message": "Much more effecient.\n+1 Oxygen Capacity",
+		"message": "Much more effecient.\n+1 Oxygen Capacity.",
 		"image": preload("res://Assets/Treasures/BikerHelm.png")
+	},
+	{
+		"object": "EnergyCapacitor",
+		"scene_object": preload("res://Objects/Treasures/EnergyCapacitor.tscn"),
+		"header": "Energy Capictor.",
+		"message": "A much needed upgrade.\n Passing stores movement.",
+		"image": preload("res://Assets/Treasures/EnergyCapacitor.png")
 	},
 	{
 		"object": "MasterKey",
@@ -39,7 +46,7 @@ var treasures = [
 		"header": "A Key.",
 		"message": "Finally.\nFind the lock.",
 		"image": preload("res://Assets/Treasures/MasterKey.png")
-	},
+	}
 ]
 var enemy = null
 var TYPES_OF_ENEMIES = 2
@@ -329,7 +336,7 @@ func generate_objects_in_world(spawn_locations: Dictionary) -> Dictionary:
 	# sets treasure dictionary
 	var treasure = {}
 	if !spawn_key:
-		treasure_index = randi() % 3
+		treasure_index = randi() % 4
 	if treasure_index < treasures.size() and randi() % CHANCE_OF_TREASURE_SPAWNING == 0:
 		treasure["object"] = treasures[treasure_index].object
 		treasure["object_data"] = spawn_objects_at_locations(treasures[treasure_index].scene_object, spawn_locations.pickup_spawn_locations, 1, "treasure")

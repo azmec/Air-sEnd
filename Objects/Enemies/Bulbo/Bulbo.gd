@@ -1,7 +1,7 @@
 extends Node2D
 
 # this is a terrible idea because it makes this code dependant on tree structure
-onready var tileMap = get_tree().get_root().get_node("Main").find_node("TileMap")
+onready var tileMap = get_tree().get_root().get_node("Main").find_node("WallTiles")
 onready var player = get_tree().get_root().get_node("Main").find_node("Player")
 onready var main = get_tree().get_root().get_node("Main")
 onready var characterController = $CharacterController
