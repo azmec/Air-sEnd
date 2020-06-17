@@ -17,6 +17,8 @@ onready var deathDisplay = $CanvasLayer/DeathDisplay
 onready var deathText = $CanvasLayer/DeathDisplay/DeathText
 onready var deathTextGenerator = $DeathTextGenerator
 onready var levelText = $CanvasLayer/LevelText
+onready var levelTextBubble = $CanvasLayer/LevelTextBubble
+onready var vignette = $CanvasLayer/Vignette
 onready var treasureDisplay = $CanvasLayer/TreasureDisplay
 onready var treasureHeader = $CanvasLayer/TreasureDisplay/Header
 onready var treasureMessage = $CanvasLayer/TreasureDisplay/Message
@@ -41,7 +43,7 @@ func _ready():
 	randomize()
 	# initilizing controllers
 	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
-	generate_world()
+	generate_end_world()
 	player.connect("player_turn_taken", self, "_on_Player_turn_taken")
 	player.connect("player_is_dead", self, "_on_Player_is_dead")
 	player.connect("not_valid_move", self, "_on_Player_not_valid_move")
@@ -60,7 +62,6 @@ func generate_world():
 	aStar = world_data.aStar
 	aStar_points_cache = world_data.aStar_points_cache
 	player.init(treasure_data, alternateExit, exit)
-	player.alternateExit_spawned = worldGenerator.alternateExit_spawned
 	levelText.text = "Level: " + str(current_level + 1)
 
 func _process(_delta):
@@ -80,15 +81,16 @@ func _process(_delta):
 	oxygenUI.rect_size.x = player.oxygen_count * 16
 	if player.oxygen_count <= 0:
 		oxygenUI.hide()
-	else:
-		oxygenUI.show()
 	for enemy in enemies.values():
 		if player.global_position == enemy.global_position:
 			player.die()
 	if is_alternate:
+		for enemy in enemies.values():
+			enemy.sprite.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
 		levelText.text = "Level: " + str (randi() % 100)
 		tileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
 		floorTileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
+		exit.sprite.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
 
 func restart():
 	player.default()
@@ -119,7 +121,10 @@ func _on_Player_not_valid_move():
 
 func _on_Player_at_exit(type_of_exit):
 	if type_of_exit == exit:
-		generate_world()
+		if is_alternate:
+			generate_end_world()
+		else:
+			generate_world()
 	elif type_of_exit == alternateExit:
 		generate_alternate_world()
 
@@ -139,3 +144,34 @@ func generate_alternate_world():
 	floorTileMap.tile_set = load('res://Objects/TileSets/final_tileset.tres')
 	tileMap.tile_set = load('res://Objects/TileSets/final_room.tres')
 	generate_world()
+
+func generate_end_world():
+	rooms = preload("res://Assets/Tiles/end_layout.png").get_data()
+	floorTileMap.tile_set = load('res://Objects/TileSets/end_floor.tres')
+	tileMap.tile_set = load('res://Objects/TileSets/end_wall.tres')
+	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
+	worldGenerator.spawn_note = true
+	generate_world()
+	exit.visible = false
+	exit.set_process(false)
+	alternateExit.visible = false 
+	alternateExit.set_process(false)
+	is_alternate = false
+	hide_ui()
+	make_player_god()
+
+func make_player_god():
+	player.oxygen_timer_max = 999
+	player.maximum_oxygen = 999
+	player.oxygen_timer = 999
+	player.oxygen_count = 999
+	player.MINIMUM_MOVES = 999
+
+func hide_ui():
+	vignette.hide()
+	oxygenUI.hide()
+	keyUI.hide()
+	moveTileUI.hide()
+	oxygenTimerUI.hide()
+	levelText.hide()
+	levelTextBubble.hide()

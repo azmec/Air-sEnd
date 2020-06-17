@@ -6,6 +6,7 @@ onready var player = get_tree().get_root().get_node("Main").find_node("Player")
 onready var main = get_tree().get_root().get_node("Main")
 onready var characterController = $CharacterController
 onready var lineOfSight = $LineOfSight
+onready var sprite = $Sprite
 var is_enemy_turn = false
 var tileMap_ref = null
 var aStar_ref = null

@@ -10,7 +10,7 @@ onready var aStar = AStar2D.new()
 var aStar_points_cache = {}
 var treasure_index = 0
 var spawn_key = true
-var alternateExit_spawned = false
+var spawn_note = false
 var treasures = [
 	{
 		"object": "OxygenCanister",
@@ -46,6 +46,13 @@ var treasures = [
 		"header": "A Key.",
 		"message": "Finally.\nFind the lock.",
 		"image": preload("res://Assets/Treasures/MasterKey.png")
+	},
+	{
+		"object": "Note",
+		"scene_object": preload("res://Objects/Treasures/Note.tscn"),
+		"header": "A Note.",
+		"message": "It is... familiar.\nIt reads: You did it. You are in another world. Another time.",
+		"image": preload("res://Assets/Treasures/a_note.png")
 	}
 ]
 var enemy = null
@@ -83,6 +90,8 @@ func init(scene_root_ref, tilemap_ref, player_ref, exit_ref, room_ref, floor_ref
 func stupid_ass_generator(level, treasure_ind):
 	current_level = level 
 	treasure_index = treasure_ind
+	if spawn_note == true:
+		treasure_index = 5
 	# clear everything
 	aStar.clear()
 	tilemap.clear()
@@ -325,7 +334,6 @@ func generate_objects_in_world(spawn_locations: Dictionary) -> Dictionary:
 		alternateExit.visible = true
 		alternateExit.set_process(true)
 		alternateExit.global_position = map_coord_to_world_pos(spawn_locations.alternateExit_coordinates)
-		alternateExit_spawned = true
 	else:
 		alternateExit.visible = false
 		alternateExit.set_process(false)

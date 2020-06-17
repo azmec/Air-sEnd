@@ -12,7 +12,6 @@ var current_level = 0
 var treasureData = null
 var exit = null
 var alternateExit = null
-var alternateExit_spawned = false
 var worldGenerator = null
 # oxygen variables
 var oxygen_count = 5
@@ -21,9 +20,9 @@ var oxygen_timer_max = 5
 var maximum_oxygen = 5
 var can_add_oxygen = true
 var dead = false
-var key_count = 1
+var key_count = 0
 var can_store_energy = false
-var maximum_move_tiles = 2
+var maximum_move_tiles = 3
 # used for input grace
 var can_move = false
 var move_direction = [0, 0]
@@ -154,14 +153,13 @@ func _process(_delta):
 		# signal that our turn was taken
 		emit_signal("player_turn_taken")
 	else: 
-		if alternateExit_spawned:
-			# if our position matches the alternateExit and we have a key
-			if self.global_position == alternateExit.global_position and key_count <= 0:
-				$NoMove.play()
-				characterController.move_character(self, RIGHT)
-				emit_signal("not_valid_move") 
-			elif self.global_position == alternateExit.global_position and key_count >= 1:
-				emit_signal("player_at_exit", alternateExit)
+		# if our position matches the alternateExit and we have a key
+		if self.global_position == alternateExit.global_position and key_count <= 0:
+			$NoMove.play()
+			characterController.move_character(self, RIGHT)
+			emit_signal("not_valid_move") 
+		elif self.global_position == alternateExit.global_position and key_count >= 1:
+			emit_signal("player_at_exit", alternateExit)
 		if self.global_position == exit.global_position:
 			current_level += 1
 			emit_signal("player_at_exit", exit)

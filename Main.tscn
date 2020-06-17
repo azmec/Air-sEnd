@@ -25,15 +25,15 @@
 [ext_resource path="res://MiscScripts/ChromaticAbberation.shader" type="Shader" id=23]
 [ext_resource path="res://Assets/Treasures/MasterKey.png" type="Texture" id=24]
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 23 )
 shader_param/apply = true
-shader_param/amount = 1.0
+shader_param/amount = 0.0
 
-[sub_resource type="ShaderMaterial" id=8]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 23 )
 shader_param/apply = true
-shader_param/amount = 1.0
+shader_param/amount = 0.0
 
 [sub_resource type="DynamicFont" id=3]
 size = 20
@@ -56,13 +56,13 @@ font_data = ExtResource( 14 )
 script = ExtResource( 3 )
 
 [node name="GroundTiles" type="TileMap" parent="."]
-material = SubResource( 7 )
+material = SubResource( 1 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="WallTiles" type="TileMap" parent="."]
-material = SubResource( 8 )
+material = SubResource( 2 )
 tile_set = ExtResource( 8 )
 cell_size = Vector2( 16, 16 )
 format = 1
@@ -160,7 +160,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextBubble" type="TextureRect" parent="CanvasLayer"]
+[node name="LevelTextBubble" type="TextureRect" parent="CanvasLayer"]
 margin_left = 120.0
 margin_top = -24.0
 margin_right = 200.0
