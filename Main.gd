@@ -43,7 +43,7 @@ func _ready():
 	randomize()
 	# initilizing controllers
 	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
-	generate_end_world()
+	generate_world()
 	player.connect("player_turn_taken", self, "_on_Player_turn_taken")
 	player.connect("player_is_dead", self, "_on_Player_is_dead")
 	player.connect("not_valid_move", self, "_on_Player_not_valid_move")
@@ -74,6 +74,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("restart"):
 		restart()
 	if Input.is_action_just_pressed("exit"):
+		restart()
 		get_tree().change_scene("res://Objects/TitleScreen/TitleScreen.tscn")
 	oxygenTimerUI.rect_size.x = (player.oxygen_timer + 1) * 16
 	moveTileUI.rect_size.x = (player.moves_left + 1) * 16
@@ -91,10 +92,25 @@ func _process(_delta):
 		tileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
 		floorTileMap.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
 		exit.sprite.material.set_shader_param("amount", ((randi() % 10) * player.current_level))
+	else:
+		for enemy in enemies.values():
+			enemy.sprite.material.set_shader_param("amount", 0)
+		tileMap.material.set_shader_param("amount", 0)
+		floorTileMap.material.set_shader_param("amount", 0)
+		exit.sprite.material.set_shader_param("amount", 0)
 
 func restart():
+	VisualServer.set_default_clear_color(Color8(71.0, 45.0, 60.0))
+	exit.visible = true
+	exit.set_process(true)
+	alternateExit.visible = true 
+	alternateExit.set_process(true)
+	worldGenerator.spawn_note = false
+	is_alternate = false
 	player.default()
+	default_ui()
 	deathDisplay.hide()
+	set_rooms_to_default()
 	generate_world()
 
 func world_position_to_map_position(position: Vector2):
@@ -139,17 +155,15 @@ func _on_Player_treasure_found(treasure_name):
 
 func generate_alternate_world():
 	is_alternate = true
-	rooms = preload("res://Assets/Tiles/alternative_layout.png").get_data()
-	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
-	floorTileMap.tile_set = load('res://Objects/TileSets/final_tileset.tres')
-	tileMap.tile_set = load('res://Objects/TileSets/final_room.tres')
+	set_rooms_to_alternative()
 	generate_world()
+	alternateExit.visible = false 
+	alternateExit.set_process(false)
 
 func generate_end_world():
-	rooms = preload("res://Assets/Tiles/end_layout.png").get_data()
-	floorTileMap.tile_set = load('res://Objects/TileSets/end_floor.tres')
-	tileMap.tile_set = load('res://Objects/TileSets/end_wall.tres')
-	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
+	camera.reset_camera()
+	VisualServer.set_default_clear_color(Color8(207, 198, 184))
+	set_rooms_to_end()
 	worldGenerator.spawn_note = true
 	generate_world()
 	exit.visible = false
@@ -175,3 +189,30 @@ func hide_ui():
 	oxygenTimerUI.hide()
 	levelText.hide()
 	levelTextBubble.hide()
+
+func default_ui():
+	vignette.show()
+	oxygenUI.show()
+	keyUI.show()
+	moveTileUI.show()
+	oxygenTimerUI.show()
+	levelText.show()
+	levelTextBubble.show()
+
+func set_rooms_to_end():
+	rooms = preload("res://Assets/Tiles/end_layout.png").get_data()
+	floorTileMap.tile_set = load('res://Objects/TileSets/end_floor.tres')
+	tileMap.tile_set = load('res://Objects/TileSets/end_wall.tres')
+	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
+
+func set_rooms_to_alternative():
+	rooms = preload("res://Assets/Tiles/alternative_layout.png").get_data()
+	floorTileMap.tile_set = load('res://Objects/TileSets/final_tileset.tres')
+	tileMap.tile_set = load('res://Objects/TileSets/final_room.tres')
+	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
+
+func set_rooms_to_default():
+	rooms = preload("res://Assets/Tiles/Layouts.png").get_data()
+	floorTileMap.tile_set = load('res://Objects/TileSets/base_floor_tiles.tres')
+	tileMap.tile_set = load('res://Objects/TileSets/base_wall_tiles.tres')
+	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)

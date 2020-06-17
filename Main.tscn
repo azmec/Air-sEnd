@@ -107,12 +107,13 @@ __meta__ = {
 }
 
 [node name="testtext" type="Label" parent="CanvasLayer"]
+visible = false
 margin_left = 200.0
 margin_right = 324.0
 margin_bottom = 24.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
-text = "rework branch"
+text = "dev"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -252,19 +253,21 @@ custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "HEADER"
 align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Message" type="Label" parent="CanvasLayer/TreasureDisplay"]
 margin_left = 10.0
-margin_top = 24.0
+margin_top = 26.0
 margin_right = 153.0
-margin_bottom = 48.0
+margin_bottom = 50.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "MESSAGE"
 align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

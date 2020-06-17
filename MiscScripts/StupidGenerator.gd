@@ -44,14 +44,14 @@ var treasures = [
 		"object": "MasterKey",
 		"scene_object": preload("res://Objects/Treasures/MasterKey.tscn"),
 		"header": "A Key.",
-		"message": "Finally.\nFind the lock.",
+		"message": "Finally.\nFind the lock. Find the past.",
 		"image": preload("res://Assets/Treasures/MasterKey.png")
 	},
 	{
 		"object": "Note",
 		"scene_object": preload("res://Objects/Treasures/Note.tscn"),
 		"header": "A Note.",
-		"message": "It is... familiar.\nIt reads: You did it. You are in another world. Another time.",
+		"message": "From the future.\nYou win. Thanks for playing!",
 		"image": preload("res://Assets/Treasures/a_note.png")
 	}
 ]
@@ -345,6 +345,8 @@ func generate_objects_in_world(spawn_locations: Dictionary) -> Dictionary:
 	var treasure = {}
 	if !spawn_key:
 		treasure_index = randi() % 4
+	if spawn_note == true:
+		treasure_index = 5
 	if treasure_index < treasures.size() and randi() % CHANCE_OF_TREASURE_SPAWNING == 0:
 		treasure["object"] = treasures[treasure_index].object
 		treasure["object_data"] = spawn_objects_at_locations(treasures[treasure_index].scene_object, spawn_locations.pickup_spawn_locations, 1, "treasure")

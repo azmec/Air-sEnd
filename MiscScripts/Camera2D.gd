@@ -19,9 +19,7 @@ func _process(delta):
 	elif Input.is_action_just_released("zoom_out"):
 		_zoom_camera(1)
 	if Input.is_action_just_pressed("reset_zoom"):
-		self.zoom = Vector2(1, 1)
-		self.position.x = 0
-		self.position.y = 0
+		reset_camera()
 
 # Zoom Camera
 func _zoom_camera(dir):
@@ -32,3 +30,8 @@ func _zoom_camera(dir):
 
 func _on_CharacterController_no_valid_move():
 	screenShake.start(0.1, 15, 8, 0)
+
+func reset_camera():
+	self.zoom = Vector2(1, 1)
+	self.position.x = 0
+	self.position.y = 0

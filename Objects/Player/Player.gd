@@ -39,6 +39,7 @@ signal player_is_dead
 signal not_valid_move
 signal treasure_found(treasure_name)
 
+
 const RIGHT = [1, 0]
 const LEFT = [-1, 0]
 const UP = [0, -1]
