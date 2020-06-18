@@ -14,7 +14,7 @@ var exit = null
 var alternateExit = null
 var worldGenerator = null
 # oxygen variables
-var oxygen_count = 5
+var oxygen_count = 9
 var oxygen_timer = 5
 var oxygen_timer_max = 5
 var maximum_oxygen = 5
@@ -68,7 +68,7 @@ func default():
 	can_store_energy = false
 	key_count = 0
 	current_level = 0
-	oxygen_count = 5
+	oxygen_count = 9
 	oxygen_timer = 5
 	oxygen_timer_max = 5
 	maximum_oxygen = 5
