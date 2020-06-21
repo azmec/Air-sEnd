@@ -43,19 +43,20 @@ func _ready():
 	randomize()
 	# initilizing controllers
 	worldGenerator.init(self, tileMap, player, exit, rooms, floorTileMap, alternateExit)
-	generate_world()
+	generate_alternate_world()
 	player.connect("player_turn_taken", self, "_on_Player_turn_taken")
 	player.connect("player_is_dead", self, "_on_Player_is_dead")
 	player.connect("not_valid_move", self, "_on_Player_not_valid_move")
 	player.connect("player_at_exit", self, "_on_Player_at_exit")
 	player.connect("treasure_found", self, "_on_Player_treasure_found")
+	player.current_level = 10
 
 func generate_world():
 	$Sounds/NewLevel.play()
 	treasure_index = randi() % 5
 	death_text = deathTextGenerator.get_death_text()
 	player.moves_left = player.MINIMUM_MOVES
-	var current_level = player.current_level
+	var current_level = 10
 	var world_data = worldGenerator.stupid_ass_generator(current_level, treasure_index)
 	enemies = world_data.enemies
 	treasure_data = world_data.treasure_data
